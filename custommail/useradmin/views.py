@@ -31,19 +31,23 @@ def login(request):
     if request.method == 'POST':
         form = Loginform(request, data = request.POST)
         if form.is_valid():
-            username = request.POST('username')
-            password = request.POST('password')
+            username = request.POST['username']
+            password = request.POST['password']
             
             user = authenticate(request, username = username, password = password)
             if user is not None:
                 auth.login(request, user)
-                return redirect('dashboard')
+                return redirect('home')
             else:
                 messages.info(request, 'Username or password is incorrect')
 
     
     context = {'form':form}
     return render(request, 'useradmin/login.html', context=context)
+
+def logout(request):
+    auth.logout(request)
+    return redirect('login')
 
 def createMail(request):
     return render(request,'useradmin/createMail.html')

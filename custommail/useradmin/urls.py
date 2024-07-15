@@ -4,9 +4,10 @@ from useradmin import views
 
 urlpatterns = [
 
-    path('',views.home,name='home'),
-    path('login/', views.login, name='login'),
+    path('',views.login,name='login'),
+    path('home/',views.home,name='home'),
     path('signup/', views.signup, name='signup'),
-    path('createMail/',views.createMail, name='create_Mail' )
+    path('createMail/',views.createMail, name='create_Mail' ),
+    path('logout/',views.logout,name='logout'),
 
 ]
