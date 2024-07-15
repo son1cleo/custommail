@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Task Mail</title>
+    <style>
+        body {
+            {% comment %} margin-top:100px;
+            margin-bottom: 100px; {% endcomment %}
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            {% comment %} height: 100vh; {% endcomment %}
+            margin: 0;
+        }
+        .container {
+            margin-top:30px;
+            margin-bottom: 100px;
+            width: 400px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="text"], input[type="url"], textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        textarea {
+            resize: vertical;
+        }
+        .checklist {
+            margin-bottom: 15px;
+        }
+        .checklist label {
+            font-weight: normal;
+        }
+        .checklist input[type="checkbox"] {
+            margin-right: 10px;
+        }
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .btn:hover {
+            background: #218838;
+        }
+        .search-bar {
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Create Task Mail</h1>
+        <form method = "POST">
+            {% csrf_token %}
+            <label for="mail-title">Mail Title</label>
+            <input type="text" id="mail-title" name="mail-title" required>
+
+            <label for="description">Description</label>
+            <textarea id="description" name="description" rows="4" required></textarea>
+
+            <label for="task-link">Task Link</label>
+            <input type="url" id="task-link" name="task-link" required>
+
+            <label for="search-bar">Search Recipients</label>
+            <input type="text" id="search-bar" class="search-bar" onkeyup="filterRecipients()" placeholder="Search for names..">
+
+            <div class="checklist" id="checklist">
+                <label>Send to:</label>
+                <label><input type="checkbox" name="recipient" value="person1"> Person 1</label><br>
+                <label><input type="checkbox" name="recipient" value="person2"> Person 2</label><br>
+                <label><input type="checkbox" name="recipient" value="person3"> Person 3</label><br>
+                <label><input type="checkbox" name="recipient" value="person4"> Person 4</label>
+            </div>
+
+            <button type="submit" class="btn">Create</button>
+        </form>
+    </div>
+    <script>
+        function filterRecipients() {
+            var input, filter, checklist, labels, i, txtValue;
+            input = document.getElementById('search-bar');
+            filter = input.value.toUpperCase();
+            checklist = document.getElementById("checklist");
+            labels = checklist.getElementsByTagName('label');
+
+            for (i = 0; i < labels.length; i++) {
+                txtValue = labels[i].textContent || labels[i].innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    labels[i].style.display = "";
+                } else {
+                    labels[i].style.display = "none";
+                }
+            }
+        }
+    </script>
+</body>
+</html>

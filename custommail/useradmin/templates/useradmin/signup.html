@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>Signup Page</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Font-awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- Your custom CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/signup.css' %}">
+</head>
+<body>
+   <div class="container bg-light shadow-md p-5">
+        <div class="forms-container">
+            <div class="signup">
+                <form method="post" class="signup-form" autocomplete="off">
+                    {% csrf_token %}
+                    <h2 class="title">Sign Up</h2>
+                    
+                    <div class="input-field">
+                        <i class="fas fa-user"></i>
+                        {{ form.username }}
+                    </div>
+                    <div class="input-field">
+                        <i class="fas fa-envelope"></i>
+                        {{ form.email }}
+                    </div>
+                    <div class="input-field">
+                        <i class="fas fa-lock"></i>
+                        {{ form.password1 }}
+                    </div>
+                    <div class="input-field">
+                        <i class="fas fa-lock"></i>
+                        {{ form.password2 }}
+                    </div>
+                    <button type="submit" class="btn solid">Sign Up</button>
+                    <br>
+                    <p>Already have an account? <a href="{% url 'login' %}">Log In</a></p>
+                    {% for message in messages  %}
+                        <p>{{message}}</p>
+                    {% endfor %}
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
