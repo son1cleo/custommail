@@ -63,6 +63,7 @@
                 border-radius: 20px;
                 border: 1px solid #137AAC;
                 background-color: #137AAC;
+                
                 color: #FFFFFF;
                 font-size: 12px;
                 font-weight: bold;
@@ -269,6 +270,9 @@
                     opacity: 1;
                     z-index: 2;
                 }
+                button {
+                    margin-top: 15px;
+                }
             }
     
     </style>
@@ -283,7 +287,7 @@
                 <input type="password" placeholder="Password" />
                 <button>Sign Up</button>
                 <a href="#" class="extra-para">Already have an account?</a>
-                <button class="extra-para">Sign In</button>
+                <button class="extra-para" id="extraSignIn">Sign In</button>
             </form>
         </div>
         <div class="form-container sign-in-container">
@@ -294,7 +298,7 @@
                 <a href="#">Forgot your password?</a>
                 <button>Sign In</button>
                 <a href="#" class="extra-para">Don't have an account?</a>
-                <button class="extra-para">Create Account</button>
+                <button class="extra-para"  id="extraSignUp">Create Account</button>
             </form>
         </div>
         <div class="overlay-container">
@@ -320,12 +324,22 @@
     const signUpButton = document.getElementById('signUp');
     const signInButton = document.getElementById('signIn');
     const container = document.getElementById('container');
-
+    const extraSignUp = document.getElementById('extraSignUp');
+    const extraSignInButton = document.getElementById('extraSignIn');
     signUpButton.addEventListener('click', () => {
         container.classList.add("right-panel-active");
+        console.log('heello');
     });
+    extraSignUp.addEventListener('click', () => {
+        container.classList.add("right-panel-active");
+        console.log('heello');
+    });
+    
 
     signInButton.addEventListener('click', () => {
+        container.classList.remove("right-panel-active");
+    });
+    extraSignInButton.addEventListener('click', () => {
         container.classList.remove("right-panel-active");
     });
 </script>
