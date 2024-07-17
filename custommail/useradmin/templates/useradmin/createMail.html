@@ -6,110 +6,224 @@
     <title>Create Task Mail</title>
     <style>
         body {
-            /* margin-top:100px;
-            margin-bottom: 100px; */
             font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #ece9e6, #ffffff);
             display: flex;
             justify-content: center;
             align-items: center;
-            /* height: 100vh; */
+            min-height: 100vh;
             margin: 0;
         }
         .container {
-            margin-top:30px;
-            margin-bottom: 100px;
-            width: 400px;
+            background: #fff;
+            padding: 30px;
+            margin-top: 30px;
+            margin-bottom: 30px;
+            width: 50%;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
         }
         h1 {
             text-align: center;
             color: #333;
+            margin-bottom: 20px;
         }
         label {
             display: block;
             margin-bottom: 5px;
             font-weight: bold;
+            color: #555;
         }
-        input[type="text"], input[type="url"], textarea {
+        input[type="text"], input[type="url"], textarea, input[type="file"], .search-bar {
             width: 100%;
             padding: 10px;
             margin-bottom: 15px;
             border: 1px solid #ccc;
             border-radius: 5px;
+            transition: border-color 0.3s;
+            box-sizing: border-box; /* Ensures padding is included in the width */
+        }
+        input[type="text"]:focus, input[type="url"]:focus, textarea:focus, input[type="file"]:focus, .search-bar:focus {
+            border-color: #002855;
+            outline: none;
         }
         textarea {
             resize: vertical;
-        }
-        .checklist {
-            margin-bottom: 15px;
-        }
-        .checklist label {
-            font-weight: normal;
-        }
-        .checklist input[type="checkbox"] {
-            margin-right: 10px;
         }
         .btn {
             display: block;
             width: 100%;
             padding: 10px;
-            background: #28a745;
+            background: #002855;
             color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             font-size: 16px;
+            transition: background 0.3s;
         }
         .btn:hover {
-            background: #218838;
+            background: #FFC72C;
         }
-        .search-bar {
+        .section {
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
             margin-bottom: 15px;
         }
+        table, th, td {
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background: #f9f9f9;
+            font-weight: bold;
+        }
+        td label {
+            margin: 0;
+            font-weight: normal;
+        }
+        tbody {
+            display: block;
+        }
+        thead, tbody tr {
+            display: table;
+            width: 100%;
+            table-layout: fixed;
+        }
+        tbody tr:nth-child(odd) {
+            background-color: #f2f2f2;
+        }
+
+
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+        }
+        
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+            position: relative;
+        }
+        
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        
+
+        
+        @media only screen and (max-width: 760px) {
+            .container {
+                width: 90%;
+                margin: 30px 10px;
+            }
+          }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Create Task Mail</h1>
-        <form method = "POST">
+        <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
-            <label for="mail-title">Mail Title</label>
-            <input type="text" id="mail-title" name="mail-title" required>
+            <div class="section">
+                <label for="mail-title">Mail Title</label>
+                <input type="text" id="mail-title" name="mail-title" required>
 
-            <label for="description">Description</label>
-            <textarea id="description" name="description" rows="4" required></textarea>
+                <label for="description">Description</label>
+                <textarea id="description" name="description" rows="4" required></textarea>
 
-            <label for="task-link">Task Link</label>
-            <input type="url" id="task-link" name="task-link" required>
+                <label for="task-link">Task Link</label>
+                <input type="url" id="task-link" name="task-link" required>
 
-            <label for="search-bar">Search Recipients</label>
-            <input type="text" id="search-bar" class="search-bar" onkeyup="filterRecipients()" placeholder="Search for names..">
-
-            <div class="checklist" id="checklist">
-                <label>Send to:</label>
-                <label><input type="checkbox" name="recipient" value="person1"> Person 1</label><br>
-                <label><input type="checkbox" name="recipient" value="person2"> Person 2</label><br>
-                <label><input type="checkbox" name="recipient" value="person3"> Person 3</label><br>
-                <label><input type="checkbox" name="recipient" value="person4"> Person 4</label>
+                <label for="image-upload">Upload Image</label>
+                <input type="file" id="image-upload" name="image-upload" accept="image/*">
             </div>
 
-            <button type="submit" class="btn">Create</button>
+            <!--This is the checkbox for selecting the recipient-->
+            <div class="section">
+                <div class="checklist" id="checklist">
+                    <label>Send to:</label>
+                    <input type="text" id="search-bar" class="search-bar" onkeyup="filterRecipients()" placeholder="Search for names..">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Recipient</th>
+                                <th>Select</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for user in users %}
+                            <tr>
+                                <td>{{ user.username }}</td>
+                                <td><input type="checkbox" name="recipient" value="{{ user.email }}"></td> 
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
+            <!-- Modal HTML -->
+            <div id="myModal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <p>Are you sure you want to create this task mail?</p>
+                    <button id="confirmBtn" class="btn" type=:"submit">Confirm</button>
+                </div>
+            </div>
+
+            <button id="modalBtn" type="button" class="btn">Create Task Mail</button>
+
         </form>
     </div>
     <script>
         function filterRecipients() {
-            var input, filter, checklist, labels, i, txtValue;
+            var input, filter, table, tr, td, i, txtValue;
             input = document.getElementById('search-bar');
             filter = input.value.toUpperCase();
-            checklist = document.getElementById("checklist");
-            labels = checklist.getElementsByTagName('label');
+            table = document.querySelector(".checklist table");
+            tr = table.getElementsByTagName("tr");
 
-            for (i = 0; i < labels.length; i++) {
-                txtValue = labels[i].textContent || labels[i].innerText;
-                if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                    labels[i].style.display = "";
-                } else {
-                    labels[i].style.display = "none";
-                }
+            for (i = 1; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[0];
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }       
             }
         }
     </script>

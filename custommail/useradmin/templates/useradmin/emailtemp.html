@@ -1,0 +1,45 @@
+<!-- templates/useradmin/email_template.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ mail_title }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        p {
+            color: #555;
+        }
+        .task-link {
+            margin-top: 20px;
+        }
+        .footer {
+            margin-top: 40px;
+            color: #777;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>{{ mail_title }}</h1>
+        <p>{{ description }}</p>
+        <div class="task-link">
+            <a href="{{ task_link }}">{{ task_link }}</a>
+        </div>
+        <div class="footer">
+            <p>Sent by {{ user.username }}</p>
+        </div>
+    </div>
+</body>
+</html>
