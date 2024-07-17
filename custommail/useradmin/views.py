@@ -10,6 +10,7 @@ from django.conf import settings
 from django.template.loader import render_to_string # for rendering html template 
 from django.core import mail
 from django.contrib.auth.models import User
+from django.core.files.storage import FileSystemStorage
 
 
 # home/dashboard
@@ -22,7 +23,7 @@ def signup(request):
     form = UserRegisterForm()
     if request.method == 'POST':
 
-        form = UserRegisterForm(request.POST)
+        form = UserRegisterForm(request.POST) 
         if form.is_valid():
             form.save()
             messages.success(request,'Account created successfully')
@@ -68,29 +69,41 @@ def createMail(request):
         description = request.POST.get('description')
         task_link = request.POST.get('task-link')
         recipients = request.POST.getlist('recipient')
+        
+        # Handle file upload
+        if 'image-upload' in request.FILES:
+            image = request.FILES['image-upload']
+            fs = FileSystemStorage()
+            filename = fs.save(image.name, image)
+            image_url = fs.url(filename)
+        else:
+            image_url = None
 
         context = {
             'description': description,
             'task_link': task_link,
+            'image_url': image_url,  # Add image URL to context
         }
         
         html_message = render_to_string('useradmin/emailtemp.html', context)
         plain_message = f'{description}\n\nTask Link: {task_link}'
         from_email = settings.EMAIL_HOST_USER
 
-        connection = mail.get_connection()
-        connection.open()
-
         email_message = EmailMultiAlternatives(
             mail_title, plain_message, from_email, recipients
         )
         email_message.attach_alternative(html_message, "text/html")
+        
+        # Attach the image if it exists
+        if image_url:
+            email_message.attach_file(fs.path(filename))
+        
         email_message.send()
-
-        connection.close()
-
-        messages.success(request, 'Mail sent successfully')
-        return redirect('home')
+        return redirect('success_page')  # Redirect to a success page after sending the email
 
     users = User.objects.all()
     return render(request, 'useradmin/createMail.html', {'users': users})
+
+def success_page(request):
+    messages.success(request, 'Email sent successfully')
+    return render(request, 'useradmin/index.html')

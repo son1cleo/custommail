@@ -168,7 +168,7 @@
                 <input type="file" id="image-upload" name="image-upload" accept="image/*">
             </div>
 
-            <!--This is the checkbox for selecting the recipient-->
+            <!--This is the checkbox for selecting the recipient -->
             <div class="section">
                 <div class="checklist" id="checklist">
                     <label>Send to:</label>
@@ -226,6 +226,28 @@
                 }       
             }
         }
+
+                // Get modal element
+                var modal = document.getElementById("myModal");
+        var modalBtn = document.getElementById("modalBtn");
+        var closeBtn = document.getElementsByClassName("close")[0];
+
+        // Listen for click on create task mail button to open modal
+        modalBtn.addEventListener("click", function() {
+            modal.style.display = "block";
+        });
+
+        // Listen for click on close button to close modal
+        closeBtn.addEventListener("click", function() {
+            modal.style.display = "none";
+        });
+
+        // Listen for click outside modal to close modal
+        window.addEventListener("click", function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        });
     </script>
 </body>
 </html>

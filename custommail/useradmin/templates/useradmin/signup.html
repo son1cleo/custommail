@@ -16,7 +16,7 @@
    <div class="container bg-light shadow-md p-5">
         <div class="forms-container">
             <div class="signup">
-                <form method="post" class="signup-form" autocomplete="off">
+                <form method="POST" class="signup-form" autocomplete="off">
                     {% csrf_token %}
                     <h2 class="title">Sign Up</h2>
                     
@@ -39,7 +39,7 @@
                     <button type="submit" class="btn solid">Sign Up</button>
                     <br>
                     <p>Already have an account? <a href="{% url 'login' %}">Log In</a></p>
-                    {% for message in messages  %}
+                    {% for message in messages  %} <!-- Display messages -->
                         <p>{{message}}</p>
                     {% endfor %}
                 </form>
