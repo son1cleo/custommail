@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>Login Page</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!--font-awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- Your custom CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/signup.css' %}">
+</head>
+<body>
+   <div class = "container">
+        <div class ="forms-container">
+            <div class ="login">
+                <form method ="POST" autocomplete ="off">
+                    <h2 class="title">Log In</h2>
+                    {% csrf_token %}
+
+                    {{form.as_p}}
+                    
+                    <button type="submit" class="btn solid">Login</button>
+                    <br>
+                    <p>Don't have an account? <a href="{% url 'signup' %}">Sign Up</a></p>
+                    {% for message in messages  %}
+                        <p><div class="alert alert-info" role="alert">
+                        {{message}}
+                        </div>
+                        </p>
+                    {% endfor %}
+                </form>
+                
+            </div>
+        </div>
+    </div>
+</body>
