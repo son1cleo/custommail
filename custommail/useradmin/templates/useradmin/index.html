@@ -11,66 +11,12 @@
         body {
             font-family: Arial, sans-serif;
         }
-
+        
         .header {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 30px;
-            background-color: #f1f1f1;
+            justify-content: center;
         }
-
-        .header h1 {
-            margin: 0;
-        }
-
-        .search-container {
-            display: flex;
-            align-items: center;
-        }
-
-        .search-container input {
-            padding: 5px;
-            border-radius: 4px;
-            border: 1px solid #ccc;
-        }
-
-        .search-container button {
-            background-color: #001D44;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 4px;
-            margin-left: 10px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-        }
-
-        .search-container button .icon {
-            margin-right: 5px;
-        }
-
-        .logout-user {
-            background-color: #001D44;
-            color: white;
-            padding: 0.4rem 1.0rem;
-            border: none;
-            border-radius: 0.25rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-        }
-
-        .logout-user>a {
-            text-decoration: none;
-            color: white;
-        }
-
-        .logout-user:hover {
-            background-color: #265FA2;
-        }
-
+        
         .container {
             margin-top: 30px;
             margin-left: 30px;
@@ -80,7 +26,7 @@
             justify-content: space-between;
             gap: 1rem;
         }
-
+        
         .card {
             background-color: #ffffff;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
@@ -88,38 +34,34 @@
             overflow: hidden;
             flex: 1 1 calc(100% / 4 - 1rem);
             max-width: calc(100% / 4 - 1rem);
-            max-height: 320px
+            cursor: pointer; /* Added cursor pointer to indicate clickability */
         }
-
+        
         figure {
             padding: 0;
             margin: 0;
         }
-
+        
         .card img {
             width: 100%;
         }
-
-        .cardImage{
-            height: 150px;
-        }
-
+        
         .card-body {
             padding: 1rem;
         }
-
+        
         .card-title {
             font-size: 1.2rem;
             margin: 0.5rem 0;
         }
-
+        
         .card-actions {
             display: flex;
             justify-content: flex-end;
         }
-
+        
         .btn {
-            background-color: #001D44;
+            background-color: #002855;
             color: white;
             padding: 0.6rem 1.2rem;
             border: none;
@@ -128,34 +70,56 @@
             display: flex;
             align-items: center;
         }
-
+        
         .btn>a {
             text-decoration: none;
             color: white
         }
-
-        .btn:hover {
-            background-color: #265FA2;
+        
+        .logout-user {
+            background-color: #002855;
+            color: white;
+            padding: 0.4rem 1.0rem;
+            border: none;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            display: flex;
+            position: absolute;
+            top: 10px;
+            right: 30px;
         }
-
+        
+        .logout-user>a {
+            text-decoration: none;
+            color: white
+        }
+        
+        .logout-user:hover {
+            background-color: #FFC72C;
+        }
+        
         .icon {
             margin-right: 0.5rem;
         }
-
+        
+        .btn:hover {
+            background-color: #FFC72C;
+        }
+        
         @media (max-width: 1024px) {
             .card {
                 flex: 1 1 calc(100% / 2 - 1rem);
                 max-width: calc(100% / 2 - 1rem);
             }
         }
-
+        
         @media (max-width: 600px) {
             .card {
                 flex: 1 1 100%;
                 max-width: 100%;
             }
         }
-
+        
         .modal {
             display: none;
             position: fixed;
@@ -167,11 +131,11 @@
             justify-content: center;
             align-items: center;
         }
-
+        
         .modal[open] {
             display: flex;
         }
-
+        
         .modal-box {
             background-color: white;
             padding: 2rem;
@@ -180,7 +144,7 @@
             max-width: 1000px;
             width: 100%;
         }
-
+        
         .modal-action {
             display: flex;
             justify-content: flex-end;
@@ -191,147 +155,120 @@
 
 <body>
     <div class="header">
-        <h1>Home</h1>
-        <div class="search-container">
-            <input type="text" id="searchInput" placeholder="Search mail cards..." oninput="searchCards()">
-            <a href={% url "create_Mail" %}>
+        <div>
+            <div class="header">
+                <h1>Home</h1>
+            </div>
+            <div class="header">
                 <button class="btn">
-                    <span class="icon">+</span>
-                    Create New Mail
+                    <a href="{% url 'create_Mail' %}">Create New Mail</a>
+                    {% csrf_token %}
                 </button>
-            </a>
+                <br>
+                <button class="logout-user">
+                    <a href="{% url 'logout' %}">Logout</a>
+                </button>
+            </div>
         </div>
-        <button class="logout-user">
-            <a href="{% url 'logout' %}">Logout</a>
-        </button>
     </div>
     <div class="container">
-        <div class="card">
+        <div class="card" onclick="document.getElementById('my_modal_1').showModal()">
             <figure>
-                <img class="cardImage" src="https://via.placeholder.com/150" alt="Email Banner">
+                <img src="https://via.placeholder.com/400x200" alt="Email Banner">
             </figure>
             <div class="card-body">
                 <h2 class="card-title">Email Heading</h2>
                 <p>Lorem ipsum dolor sit amet consect adipisic elit. Condw, dolore.</p>
-                <div class="card-actions">
-                    <button class="btn" onclick="document.getElementById('my_modal_1').showModal()">
-                        <img class="icon" width="20px" height="20px" src="https://via.placeholder.com/20" alt="view icon"> View
-                    </button>
-                    <dialog id="my_modal_1" class="modal">
-                        <div class="modal-box">
-                            <h3 class="text-lg font-bold">Hello!</h3>
-                            <p class="py-4">Press ESC key or click the button below to close</p>
-                            <div class="modal-action">
-                                <form method="dialog">
-                                    <button class="btn">Close</button>
-                                </form>
-                            </div>
-                        </div>
-                    </dialog>
-                </div>
             </div>
+            <dialog id="my_modal_1" class="modal">
+                <div class="modal-box">
+                    <h3 class="text-lg font-bold">Hello!</h3>
+                    <p class="py-4">Press ESC key or click the button below to close</p>
+                    <div class="modal-action">
+                        <form method="dialog">
+                            <!-- if there is a button in form, it will close the modal -->
+                            <button class="btn">Close</button>
+                        </form>
+                    </div>
+                </div>
+            </dialog>
         </div>
         <!-- Repeat the card component for as many cards as needed -->
-        <div class="card">
+        <div class="card" onclick="document.getElementById('my_modal_2').showModal()">
             <figure>
-                <img class="cardImage"  src="https://via.placeholder.com/150" alt="Email Banner">
+                <img src="https://via.placeholder.com/400x200" alt="Email Banner">
             </figure>
             <div class="card-body">
                 <h2 class="card-title">Email Heading</h2>
                 <p>Lorem ipsum dolor sit amet consect adipisic elit. Condw, dolore.</p>
-                <div class="card-actions">
-                    <button class="btn" onclick="document.getElementById('my_modal_2').showModal()">
-                        <img class="icon" width="20px" height="20px" src="https://via.placeholder.com/20" alt="view icon"> View
-                    </button>
-                    <dialog id="my_modal_2" class="modal">
-                        <div class="modal-box">
-                            <h3 class="text-lg font-bold">Hello!</h3>
-                            <p class="py-4">Press ESC key or click the button below to close</p>
-                            <div class="modal-action">
-                                <form method="dialog">
-                                    <button class="btn">Close</button>
-                                </form>
-                            </div>
-                        </div>
-                    </dialog>
-                </div>
             </div>
+            <dialog id="my_modal_2" class="modal">
+                <div class="modal-box">
+                    <h3 class="text-lg font-bold">Hello!</h3>
+                    <p class="py-4">Press ESC key or click the button below to close</p>
+                    <div class="modal-action">
+                        <form method="dialog">
+                            <!-- if there is a button in form, it will close the modal -->
+                            <button class="btn">Close</button>
+                        </form>
+                    </div>
+                </div>
+            </dialog>
         </div>
-        <div class="card">
+        <div class="card" onclick="document.getElementById('my_modal_3').showModal()">
             <figure>
-                <img class="cardImage"  src="https://via.placeholder.com/150" alt="Email Banner">
+                <img src="https://via.placeholder.com/400x200" alt="Email Banner">
             </figure>
             <div class="card-body">
                 <h2 class="card-title">Email Heading</h2>
                 <p>Lorem ipsum dolor sit amet consect adipisic elit. Condw, dolore.</p>
-                <div class="card-actions">
-                    <button class="btn" onclick="document.getElementById('my_modal_3').showModal()">
-                        <img class="icon" width="20px" height="20px" src="https://via.placeholder.com/20" alt="view icon"> View
-                    </button>
-                    <dialog id="my_modal_3" class="modal">
-                        <div class="modal-box">
-                            <h3 class="text-lg font-bold">Hello!</h3>
-                            <p class="py-4">Press ESC key or click the button below to close</p>
-                            <div class="modal-action">
-                                <form method="dialog">
-                                    <button class="btn">Close</button>
-                                </form>
-                            </div>
-                        </div>
-                    </dialog>
-                </div>
             </div>
+            <dialog id="my_modal_3" class="modal">
+                <div class="modal-box">
+                    <h3 class="text-lg font-bold">Hello!</h3>
+                    <p class="py-4">Press ESC key or click the button below to close</p>
+                    <div class="modal-action">
+                        <form method="dialog">
+                            <!-- if there is a button in form, it will close the modal -->
+                            <button class="btn">Close</button>
+                        </form>
+                    </div>
+                </div>
+            </dialog>
         </div>
-        <div class="card">
+        <div class="card" onclick="document.getElementById('my_modal_4').showModal()">
             <figure>
-                <img class="cardImage"  src="https://via.placeholder.com/150" alt="Email Banner">
+                <img src="https://via.placeholder.com/400x200" alt="Email Banner">
             </figure>
             <div class="card-body">
                 <h2 class="card-title">Email Heading</h2>
                 <p>Lorem ipsum dolor sit amet consect adipisic elit. Condw, dolore.</p>
-                <div class="card-actions">
-                    <button class="btn" onclick="document.getElementById('my_modal_4').showModal()">
-                        <img class="icon" width="20px" height="20px" src="https://via.placeholder.com/20" alt="view icon"> View
-                    </button>
-                    <dialog id="my_modal_4" class="modal">
-                        <div class="modal-box">
-                            <h3 class="text-lg font-bold">Hello!</h3>
-                            <p class="py-4">Press ESC key or click the button below to close</p>
-                            <div class="modal-action">
-                                <form method="dialog">
-                                    <button class="btn">Close</button>
-                                </form>
-                            </div>
-                        </div>
-                    </dialog>
-                </div>
             </div>
+            <dialog id="my_modal_4" class="modal">
+                <div class="modal-box">
+                    <h3 class="text-lg font-bold">Hello!</h3>
+                    <p class="py-4">Press ESC key or click the button below to close</p>
+                    <div class="modal-action">
+                        <form method="dialog">
+                            <!-- if there is a button in form, it will close the modal -->
+                            <button class="btn">Close</button>
+                        </form>
+                    </div>
+                </div>
+            </dialog>
         </div>
     </div>
 
     <script>
-        document.addEventListener('click', function(event) {
-            const modals = document.querySelectorAll('dialog');
-            modals.forEach(modal => {
+        document.addEventListener('click', function (event) {
+            const modalIds = ['my_modal_1', 'my_modal_2', 'my_modal_3', 'my_modal_4'];
+            modalIds.forEach(id => {
+                const modal = document.getElementById(id);
                 if (event.target === modal) {
                     modal.close();
                 }
             });
         });
-
-        function searchCards() {
-            const searchInput = document.getElementById('searchInput').value.toLowerCase();
-            const cards = document.querySelectorAll('.card');
-            cards.forEach(card => {
-                const title = card.querySelector('.card-title').textContent.toLowerCase();
-                const content = card.querySelector('.card-body').textContent.toLowerCase();
-                if (title.includes(searchInput) || content.includes(searchInput)) {
-                    card.style.display = '';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-        }
     </script>
 </body>
 
