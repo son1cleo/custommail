@@ -181,6 +181,10 @@
                             </tr>
                         </thead>
                         <tbody>
+                            <tr>
+                                <td>Select All</td>
+                                <td><input type="checkbox" id="select-all"></td>
+                            </tr>
                             {% for user in users %}
                             <tr>
                                 <td>{{ user.username }}</td>
@@ -226,6 +230,14 @@
                 }       
             }
         }
+
+        //Select all Check-box:
+        document.getElementById('select-all').addEventListener('change', function(){
+            var checkboxes = document.querySelectorAll('input[name="recipient"]');
+            for(var checkbox of checkboxes){
+                checkbox.checked = this.checked;
+            }
+        });
 
                 // Get modal element
                 var modal = document.getElementById("myModal");
