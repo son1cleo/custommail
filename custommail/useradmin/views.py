@@ -12,7 +12,10 @@ from django.template.loader import render_to_string # for rendering html templat
 #from django.core import mail
 #from django.contrib.auth.models import User
 from django.core.files.storage import FileSystemStorage
-from .models import MailHistory # for mail history to be shown
+from .models import MailHistory, MailImage # for mail history to be shown
+
+from django.shortcuts import render, get_object_or_404
+#from .models import Mail  # Replace with your actual model name
 
 
 # home/dashboard
@@ -79,20 +82,34 @@ def createMail(request):
         description = request.POST.get('description')
         task_link = request.POST.get('task-link')
         recipients = request.POST.getlist('recipient')
+
+        # Save the mail history
+        mail = MailHistory.objects.create(
+            title=mail_title,
+            description=description,
+            task_link=task_link,
+            sender=request.user,
+            recipients=','.join(recipients)
+        )
         
         # Handle file upload
         if 'image-upload' in request.FILES:
             image = request.FILES['image-upload']
+            MailImage.objects.create(mail=mail, image=image)
+
+            '''
             fs = FileSystemStorage()
             filename = fs.save(image.name, image)
             image_url = fs.url(filename)
         else:
             image_url = None
+            '''
 
         context = {
             'description': description,
             'task_link': task_link,
-            'image_url': image_url,  # Add image URL to context
+            #'image_url': image_url,  # Add image URL to context
+            'image_url': mail.images.first().image.url if mail.images.exists() else None
         }
         
         html_message = render_to_string('useradmin/emailtemp.html', context)
@@ -105,22 +122,18 @@ def createMail(request):
         email_message.attach_alternative(html_message, "text/html")
         
         # Attach the image if it exists
-        if image_url:
+        '''if image_url:
             email_message.attach_file(fs.path(filename))
-        
+        '''
+        if mail.images.exists():
+            email_message.attach_file(mail.images.first().image.path)
+            
         email_message.send()
 
-        # Save the mail history
-        MailHistory.objects.create(
-            title=mail_title,
-            #description=description,
-            #task_link=task_link,
-            sender=request.user,
-            recipients=','.join(recipients)
-        )
-
         return redirect('success_page')  # Redirect to a success page after sending the email
-
+        #Tried returning to the home page, but for some reason, it was sending duplicate emails.
+        #So the success_page body was changed to home body. This stopped the duplicacy.
+        
     users = User.objects.all()
     return render(request, 'useradmin/createMail.html', {'users': users})
 
@@ -138,3 +151,12 @@ def index(request):
     print(mail_history)
     return render(request, 'useradmin/index.html', {'mail_history': mail_history})
 '''
+
+# mail history
+def mail_detail(request, id):
+    mail = get_object_or_404(MailHistory, id=id)
+    print(mail.title , mail.sender, mail.recipients, mail.timestamp, mail.description, mail.images, mail.task_link)  # Debugging line
+    context = {
+        'mail': mail,
+    }
+    return render(request, 'useradmin/mail_detail.html', {'mail': mail})

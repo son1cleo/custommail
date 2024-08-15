@@ -195,6 +195,7 @@
             </div>
         </div>
     </div>
+
     <div class="container">
         <div class="card">
             <figure>
@@ -319,7 +320,7 @@
                     {% for mail in mail_history %}
                     <tr>
                         <!--<td>{{ forloop.counter }}</td>-->
-                        <td>{{ mail.title }}</td>
+                        <td><a href="{% url 'mail_detail' mail.id %}">{{ mail.title }}</a></td>
                         <td>{{ mail.sender.username }}</td>
                         <td>{{ mail.recipients }}</td>
                         <td>{{ mail.timestamp }}</td>
