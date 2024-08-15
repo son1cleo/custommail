@@ -150,6 +150,33 @@
             justify-content: flex-end;
             margin-top: 1rem;
         }
+<<<<<<< HEAD
+=======
+
+        .mail-history-table {
+            margin-top: 30px;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        .mail-history-table th, .mail-history-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .mail-history-table th {
+            background-color: #f2f2f2;
+        }
+
+        .table-container {
+            max-height: 300px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 0.5rem;
+        }
+        
+>>>>>>> 038eb9142e3f0980096173cc035f7290c8371bf7
     </style>
 </head>
 
@@ -177,7 +204,7 @@
                 <img src="https://via.placeholder.com/400x200" alt="Email Banner">
             </figure>
             <div class="card-body">
-                <h2 class="card-title">Email Heading</h2>
+                <h2 class="card-title">Email template 1</h2>
                 <p>Lorem ipsum dolor sit amet consect adipisic elit. Condw, dolore.</p>
             </div>
             <dialog id="my_modal_1" class="modal">
@@ -199,7 +226,7 @@
                 <img src="https://via.placeholder.com/400x200" alt="Email Banner">
             </figure>
             <div class="card-body">
-                <h2 class="card-title">Email Heading</h2>
+                <h2 class="card-title">Email template 2</h2>
                 <p>Lorem ipsum dolor sit amet consect adipisic elit. Condw, dolore.</p>
             </div>
             <dialog id="my_modal_2" class="modal">
@@ -220,7 +247,7 @@
                 <img src="https://via.placeholder.com/400x200" alt="Email Banner">
             </figure>
             <div class="card-body">
-                <h2 class="card-title">Email Heading</h2>
+                <h2 class="card-title">Email template 3</h2>
                 <p>Lorem ipsum dolor sit amet consect adipisic elit. Condw, dolore.</p>
             </div>
             <dialog id="my_modal_3" class="modal">
@@ -241,7 +268,7 @@
                 <img src="https://via.placeholder.com/400x200" alt="Email Banner">
             </figure>
             <div class="card-body">
-                <h2 class="card-title">Email Heading</h2>
+                <h2 class="card-title">Email template 4</h2>
                 <p>Lorem ipsum dolor sit amet consect adipisic elit. Condw, dolore.</p>
             </div>
             <dialog id="my_modal_4" class="modal">
@@ -259,6 +286,36 @@
         </div>
     </div>
 
+    <h2 style="text-align: center;">Mail History</h2>
+        <div class="table-container">
+            <table class="mail-history-table">
+                <thead>
+                    <tr>
+                        <!--<th>Serial Number</th>-->
+                        <th>Title</th>
+                        <th>Sender</th>
+                        <th>Recipients</th>
+                        <th>Timestamp</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for mail in mail_history %}
+                    <tr>
+                        <!--<td>{{ forloop.counter }}</td>-->
+                        <td>{{ mail.title }}</td>
+                        <td>{{ mail.sender.username }}</td>
+                        <td>{{ mail.recipients }}</td>
+                        <td>{{ mail.timestamp }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5">No mail history available.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
     <script>
         document.addEventListener('click', function (event) {
             const modalIds = ['my_modal_1', 'my_modal_2', 'my_modal_3', 'my_modal_4'];
@@ -270,6 +327,10 @@
             });
         });
     </script>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 038eb9142e3f0980096173cc035f7290c8371bf7
 </body>
 
 </html>

@@ -4,22 +4,36 @@ from django.contrib import messages
 from .forms import UserRegisterForm, Loginform
 from django.contrib.auth import authenticate
 from django.contrib.auth.decorators import login_required
+<<<<<<< HEAD
 from django.http import HttpResponse
+=======
+
+>>>>>>> 038eb9142e3f0980096173cc035f7290c8371bf7
 # email imports
 from django.core.mail import send_mail , EmailMultiAlternatives
 from django.conf import settings
 from django.template.loader import render_to_string # for rendering html template 
-from django.core import mail
-from django.contrib.auth.models import User
+#from django.core import mail
+#from django.contrib.auth.models import User
 from django.core.files.storage import FileSystemStorage
+from .models import MailHistory # for mail history to be shown
 
 
 # home/dashboard
+'''
 @login_required(login_url='login')
 def home (request):
     return render(request,'useradmin/index.html')
-# register
+'''
 
+@login_required(login_url='login')
+def home(request):
+    mail_history = MailHistory.objects.all().order_by('-timestamp')
+    print(mail_history)  # Debug print
+    return render(request, 'useradmin/index.html', {'mail_history': mail_history})
+
+
+# register
 def signup(request):
     form = UserRegisterForm()
     if request.method == 'POST':
@@ -62,7 +76,6 @@ def logout(request):
     return redirect('login')
 
 # create mail
-
 @login_required(login_url='login')
 def createMail(request):
     if request.method == 'POST':
@@ -102,11 +115,32 @@ def createMail(request):
             email_message.attach_file(fs.path(filename))
         
         email_message.send()
+
+        # Save the mail history
+        MailHistory.objects.create(
+            title=mail_title,
+            #description=description,
+            #task_link=task_link,
+            sender=request.user,
+            recipients=','.join(recipients)
+        )
+
         return redirect('success_page')  # Redirect to a success page after sending the email
 
     users = User.objects.all()
     return render(request, 'useradmin/createMail.html', {'users': users}) # Pass the users to the template
 
 def success_page(request):
+    mail_history = MailHistory.objects.all().order_by('-timestamp')
+    print(mail_history)  # Debug print
+    return render(request, 'useradmin/index.html', {'mail_history': mail_history})
+'''
     messages.success(request, 'Email sent successfully')
     return render(request, 'useradmin/index.html')
+
+    
+def index(request):
+    mail_history = MailHistory.objects.all().order_by('-timestamp')
+    print(mail_history)
+    return render(request, 'useradmin/index.html', {'mail_history': mail_history})
+'''
