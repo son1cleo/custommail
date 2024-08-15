@@ -4,6 +4,7 @@ from django.contrib import messages
 from .forms import UserRegisterForm, Loginform
 from django.contrib.auth import authenticate
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
 # email imports
 from django.core.mail import send_mail , EmailMultiAlternatives
 from django.conf import settings
@@ -80,9 +81,11 @@ def createMail(request):
             image_url = None
 
         context = {
+            'mail_title': mail_title,
             'description': description,
             'task_link': task_link,
             'image_url': image_url,  # Add image URL to context
+            'user': request.user,
         }
         
         html_message = render_to_string('useradmin/emailtemp.html', context)
@@ -102,7 +105,7 @@ def createMail(request):
         return redirect('success_page')  # Redirect to a success page after sending the email
 
     users = User.objects.all()
-    return render(request, 'useradmin/createMail.html', {'users': users})
+    return render(request, 'useradmin/createMail.html', {'users': users}) # Pass the users to the template
 
 def success_page(request):
     messages.success(request, 'Email sent successfully')
