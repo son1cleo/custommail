@@ -70,6 +70,11 @@
             <p><strong>Date Sent:</strong> {{ mail.timestamp|date:"F j, Y, g:i a" }}</p>
         </div>
 
+        <div class="mail-body">
+            <p style="color: black;"><strong>Message:</strong></p>
+            <p>{{ mail.description|linebreaks }}</p>
+        </div>
+
         {% if mail.images.exists %}
             <div class="mail-images">
                 <p style="color: black;"><strong>Attached Images:</strong></p>
@@ -78,13 +83,6 @@
                 {% endfor %}
             </div>
         {% endif %}
-
-        <div class="mail-body">
-            <p style="color: black;"><strong>Message:</strong></p>
-            <p>{{ mail.description|linebreaks }}</p>
-        </div>
-
-        
 
         {% if mail.task_link %}
             <div class="attachments">

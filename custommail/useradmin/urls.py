@@ -1,6 +1,8 @@
 from django.urls import path
 from . import views
 from useradmin import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
 
@@ -11,6 +13,4 @@ urlpatterns = [
     path('logout/',views.logout,name='logout'),
     path('success/', views.success_page, name='success_page'),
     path('mail/<int:id>/', views.mail_detail, name='mail_detail'),
-    
-
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
