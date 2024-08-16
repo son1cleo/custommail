@@ -109,7 +109,8 @@ def createMail(request):
             'description': description,
             'task_link': task_link,
             #'image_url': image_url,  # Add image URL to context
-            'image_url': mail.images.first().image.url if mail.images.exists() else None
+            'image_url': mail.images.first().image.url if mail.images.exists() else None,
+            'user' : request.user
         }
         
         html_message = render_to_string('useradmin/emailtemp.html', context)

@@ -11,58 +11,22 @@
         body {
             font-family: Arial, sans-serif;
         }
-        
-        .header{
+
+        .header {
             display: flex;
-            justify-content: center;
-        }
-        
-        .container {
-            margin-top: 30px;
-            margin-left: 30px;
-            margin-right: 30px;
-            display: flex;
-            flex-wrap: wrap;
             justify-content: space-between;
-            gap: 1rem;
+            align-items: center;
+            position: relative;
+            padding: 10px 30px;
         }
-        
-        
-        .card {
-            background-color: #ffffff;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4); 
-            border-radius: 0.5rem; 
-            overflow: hidden; 
-            flex: 1 1 calc(100% / 4 - 1rem); 
-            max-width: calc(100% / 4 - 1rem);
+
+        .logo {
+            max-height: 50px; /* Adjust the size as needed */
+            margin-left:-10px;
         }
-        
-        figure{
-            padding: 0;
-            margin: 0;
-        }
-        
-        .card img {
-            width: 100%;
-            /* object-fit: fill; */
-        }
-        
-        .card-body {
-            padding: 1rem;
-        }
-        
-        .card-title {
-            font-size: 1.2rem;
-            margin: 0.5rem 0;
-        }
-        
-        .card-actions {
-            display: flex;
-            justify-content: flex-end; 
-        }
-        
+
         .btn {
-            background-color: #001D44; 
+            background-color: #001D44;
             color: white;
             padding: 0.6rem 1.2rem;
             border: none;
@@ -74,44 +38,39 @@
 
         .btn:hover {
             background: #FFC72C;
-            color:black;
+            color: black;
         }
 
         .logout-user {
             cursor: pointer;
             display: flex;
-            position: absolute;
-            top: 10px;
-            right: 30px;
         }
 
         .icon {
-            margin-right: 0.5rem; 
+            margin-right: 0.5rem;
         }
-        
 
-        
         @media (max-width: 1024px) {
             .card {
-                flex: 1 1 calc(100% / 2 - 1rem); 
+                flex: 1 1 calc(100% / 2 - 1rem);
                 max-width: calc(100% / 2 - 1rem);
             }
         }
-        
+
         @media (max-width: 600px) {
             .card {
-                flex: 1 1 100%; 
+                flex: 1 1 100%;
                 max-width: 100%;
             }
         }
-        
 
         .mail-history-table {
             border-collapse: collapse;
             width: 100%;
         }
 
-        .mail-history-table th, .mail-history-table td {
+        .mail-history-table th,
+        .mail-history-table td {
             border: 1px solid #ddd;
             padding: 8px;
             text-align: left;
@@ -128,97 +87,46 @@
 
         .table-container {
             margin: 0 20px;
-            max-height: 300px;
+            max-height: 100%;
             overflow-y: auto;
             border: 1px solid #ddd;
             border-radius: 0.5rem;
         }
 
-        
-        
+        .search-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px;
+            gap: 10px;
+        }
+
+        .search-container input {
+            width: 100%;
+            max-width: 600px;
+            border-radius: 0.25rem;
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
     </style>
 </head>
 
 <body>
 
     <div class="header">
-        <div>
-            <div class="header">
-                <h1>Home</h1>
-            </div>
-            <div class="header">
-                <button class="btn" onclick="window.location.href='{% url 'create_Mail' %}'">Create New Mail</button>
-                <br>
-                <button class="logout-user btn" onclick="window.location.href='{% url 'logout' %}'">
-                    Logout
-                </button>
-            </div>
-        </div>
-    </div>
-    
-
-    <br>
-
-    <h2 style="text-align: center;">Templates</h2>
-    <div class="container">
-        <div class="card">
-            <figure>
-                <img src="https://via.placeholder.com/400x200" alt="Email Banner">
-            </figure>
-            <div class="card-body">
-                <h2 class="card-title">Email template 1</h2>
-                <p>Lorem ipsum dolor sit amet consect adipisic elit. Condw, dolore.</p>
-                <div class="card-actions">
-                    <button class="btn">View</button>
-                </div>
-            </div>
-        </div>
-        <div class="card">
-            <figure>
-                <img src="https://via.placeholder.com/400x200" alt="Email Banner">
-            </figure>
-            <div class="card-body">
-                <h2 class="card-title">Email template 2</h2>
-                <p>Lorem ipsum dolor sit amet consect adipisic elit. Condw, dolore.</p>
-                <div class="card-actions">
-                    <button class="btn">View</button>
-                </div>
-            </div>
-        </div>
-        <div class="card">
-            <figure>
-                <img src="https://via.placeholder.com/400x200" alt="Email Banner">
-            </figure>
-            <div class="card-body">
-                <h2 class="card-title">Email template 3</h2>
-                <p>Lorem ipsum dolor sit amet consect adipisic elit. Condw, dolore.</p>
-                <div class="card-actions">
-                    <button class="btn">View</button>
-                </div>
-            </div>
-        </div>
-        <div class="card">
-            <figure>
-                <img src="https://via.placeholder.com/400x200" alt="Email Banner">
-            </figure>
-            <div class="card-body">
-                <h2 class="card-title">Email template 4</h2>
-                <p>Lorem ipsum dolor sit amet consect adipisic elit. Condw, dolore.</p>
-                <div class="card-actions">
-                    <button class="btn">View</button>
-                </div>
-            </div>
-        </div>
-
+        <img src="https://logonoid.com/images/ieee-logo.png" alt="Logo" class="logo"> <!-- Replace with your logo path -->
+        <button class="logout-user btn" onclick="window.location.href='{% url 'logout' %}'">
+            Logout
+        </button>
     </div>
 
-    <br>
-    <br>
 
-    <h2 style="text-align: center;">Mail History</h2>
-    <div style="display: flex; justify-content: center; margin:20px; ">
-        <input type="text" id="searchBar" onkeyup="searchTable()" placeholder="Search for mails..." style="width: 100%; max-width: 600px; border-radius: 0.25rem; border: 1px solid #ddd; padding: 8px;">
+    <h2 style="text-align: center; margin-top: -5px;">Mailbox</h2>
+    <div class="search-container">
+        <input type="text" id="searchBar" onkeyup="searchTable()" placeholder="Search for mails...">
+        <button class="btn" onclick="window.location.href='{% url 'create_Mail' %}'">Compose Mail</button>
     </div>
+
     <div class="table-container">
         <table class="mail-history-table">
             <thead>
@@ -247,8 +155,7 @@
             </tbody>
         </table>
     </div>
-    
-    
+
     <script>
         function searchTable() {
             var input, filter, table, tr, td, i, j, txtValue;
@@ -256,7 +163,7 @@
             filter = input.value.toLowerCase();
             table = document.querySelector(".mail-history-table");
             tr = table.getElementsByTagName("tr");
-    
+
             for (i = 1; i < tr.length; i++) {
                 tr[i].style.display = "none";
                 td = tr[i].getElementsByTagName("td");
@@ -272,8 +179,6 @@
             }
         }
     </script>
-    
-    
 
 </body>
 
