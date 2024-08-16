@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ mail.title }}</title>
+    <style>
+        /* CSS styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .mail-container {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            max-width: 600px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        p {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #666;
+            word-wrap: break-word;
+        }
+        .meta-info {
+            margin-top: 30px;
+            font-size: 14px;
+            color: #999;
+        }
+        .meta-info strong {
+            color: #333;
+        }
+        .attachments img {
+            max-width: 100%;
+            margin-top: 10px;
+            border-radius: 4px;
+        }
+        .attachments a {
+            color: #1a73e8;
+            text-decoration: none;
+            display: block;
+            margin-top: 10px;
+            word-wrap: break-word;
+        }
+        .attachments a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="mail-container">
+        <h1>{{ mail.title }}</h1>
+        <div class="meta-info">
+            <p><strong>Sender:</strong> {{ mail.sender }}</p>
+            <p><strong>Recipient:</strong> {{ mail.recipients }}</p>
+            <p><strong>Date Sent:</strong> {{ mail.timestamp|date:"F j, Y, g:i a" }}</p>
+        </div>
+
+        {% if mail.images.exists %}
+            <div class="mail-images">
+                <p style="color: black;"><strong>Attached Images:</strong></p>
+                {% for image in mail.images.all %}
+                    <img src="{{ image.image.url }}" alt="Image attached to the mail">
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <div class="mail-body">
+            <p style="color: black;"><strong>Message:</strong></p>
+            <p>{{ mail.description|linebreaks }}</p>
+        </div>
+
+        
+
+        {% if mail.task_link %}
+            <div class="attachments">
+                <p style="color: black;"><strong>Task Link:</strong></p>
+                <a href="{{ mail.task_link }}" target="_blank">{{ mail.task_link }}</a>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
