@@ -16,80 +16,111 @@
             align-items: center;
             min-height: 100vh;
         }
-        .mail-container {
+
+        .blog-card {
             background-color: #fff;
             border-radius: 8px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            padding: 20px;
             max-width: 600px;
             width: 100%;
             box-sizing: border-box;
+            overflow: hidden;
         }
-        h1 {
+
+        .blog-card img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .blog-content {
+            padding: 20px;
+        }
+
+        .blog-title {
             font-size: 24px;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
             color: #333;
         }
-        p {
-            font-size: 16px;
-            line-height: 1.6;
-            color: #666;
-            word-wrap: break-word;
-        }
+
         .meta-info {
-            margin-top: 30px;
             font-size: 14px;
             color: #999;
+            margin-bottom: 20px;
         }
+
         .meta-info strong {
             color: #333;
         }
-        .attachments img {
-            max-width: 100%;
-            margin-top: 10px;
-            border-radius: 4px;
+
+        .blog-description {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #666;
+            margin-bottom: 20px;
+            word-wrap: break-word;
         }
+
+        .blog-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #f9f9f9;
+            border-top: 1px solid #ddd;
+        }
+
+        .back-btn {
+            display: inline-block;
+            font-size: 16px;
+            background: #002855;
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .back-btn:hover {
+            background: #FFC72C;
+            color:black;
+        }
+
         .attachments a {
             color: #1a73e8;
             text-decoration: none;
-            display: block;
-            margin-top: 10px;
             word-wrap: break-word;
         }
+
         .attachments a:hover {
             text-decoration: underline;
         }
     </style>
 </head>
 <body>
-    <div class="mail-container">
-        <h1>{{ mail.title }}</h1>
-        <div class="meta-info">
-            <p><strong>Sender:</strong> {{ mail.sender }}</p>
-            <p><strong>Recipient:</strong> {{ mail.recipients }}</p>
-            <p><strong>Date Sent:</strong> {{ mail.timestamp|date:"F j, Y, g:i a" }}</p>
-        </div>
-
-        <div class="mail-body">
-            <p style="color: black;"><strong>Message:</strong></p>
-            <p>{{ mail.description|linebreaks }}</p>
-        </div>
-
+    <div class="blog-card">
         {% if mail.images.exists %}
-            <div class="mail-images">
-                <p style="color: black;"><strong>Attached Images:</strong></p>
-                {% for image in mail.images.all %}
-                    <img src="{{ image.image.url }}" alt="Image attached to the mail">
-                {% endfor %}
-            </div>
+            <img src="{{ mail.images.first.image.url }}" alt="Blog Image">
         {% endif %}
-
-        {% if mail.task_link %}
-            <div class="attachments">
-                <p style="color: black;"><strong>Task Link:</strong></p>
-                <a href="{{ mail.task_link }}" target="_blank">{{ mail.task_link }}</a>
+        <div class="blog-content">
+            <h1 class="blog-title">{{ mail.title }}</h1>
+            <div class="meta-info">
+                <p><strong>Sender:</strong> {{ mail.sender }}</p>
+                <p><strong>Recipient:</strong> {{ mail.recipients }}</p>
+                <p><strong>Date Sent:</strong> {{ mail.timestamp|date:"F j, Y, g:i a" }}</p>
             </div>
-        {% endif %}
+            <div class="blog-description">
+                <p>{{ mail.description|linebreaks }}</p>
+            </div>
+        </div>
+        <div class="blog-footer">
+            <a href="javascript:history.back()" class="back-btn">Back</a>
+            {% if mail.task_link %}
+                <div class="attachments">
+                    <a href="{{ mail.task_link }}" target="_blank">Task Link</a>
+                </div>
+            {% endif %}
+        </div>
     </div>
 </body>
 </html>

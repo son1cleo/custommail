@@ -14,6 +14,24 @@
             min-height: 100vh;
             margin: 0;
         }
+
+        .back-btn {
+            display: inline-block;
+            font-size: 16px;
+            background: #002855;
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        
+        .back-btn:hover {
+            background: #FFC72C;
+            color:black;
+        }
+
+        
         .container {
             background: #fff;
             padding: 30px;
@@ -64,6 +82,7 @@
         }
         .btn:hover {
             background: #FFC72C;
+            color:black;
         }
         .section {
             margin-bottom: 20px;
@@ -80,8 +99,10 @@
             text-align: center;
         }
         th {
-            background: #f9f9f9;
+            background: black;
+            color:white;
             font-weight: bold;
+
         }
         td label {
             margin: 0;
@@ -95,7 +116,7 @@
             width: 100%;
             table-layout: fixed;
         }
-        tbody tr:nth-child(odd) {
+        tbody tr:nth-child(even) {
             background-color: #f2f2f2;
         }
 
@@ -119,7 +140,7 @@
             margin: 15% auto;
             padding: 20px;
             border: 1px solid #888;
-            width: 80%;
+            width: 50%;
             box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
             position: relative;
         }
@@ -151,6 +172,7 @@
 </head>
 <body>
     <div class="container">
+        <a href="javascript:history.back()" class="back-btn">Back</a>
         <h1>Create Task Mail</h1>
         <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
@@ -206,6 +228,7 @@
                 </div>
             </div>
 
+            <br>
             <button id="modalBtn" type="button" class="btn">Create Task Mail</button>
 
         </form>
