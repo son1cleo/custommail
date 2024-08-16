@@ -5,35 +5,150 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">  
     <title>Login Page</title>
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <!--font-awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <!-- Your custom CSS -->
-    <link rel="stylesheet" type="text/css" href="{% static 'css/signup.css' %}">
+    
+    
+    <style>
+        /* styles.css */
+        .container {
+            background-color: #f7fafc;
+            /* Light background */
+            border: 1px solid #e2e8f0;
+            /* Light border */
+            border-radius: 8px;
+            padding: 32px;
+            margin: 10% auto;
+            max-width: 500px;
+            /* Control the width */
+            width: 100%;
+            /* Ensure the container takes full width up to max-width */
+            box-sizing: border-box;
+            /* Include padding and border in element's total width and height */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            /* Light shadow for depth */
+        }
+
+        .container h2 {
+            text-align: center;
+            margin-bottom: 24px;
+            color: #2d3748;
+            /* Darker text color */
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .container form {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            /* Add gap between fields */
+        }
+
+        .container label {
+            display: block;
+            margin-bottom: 8px;
+            /* Space between label and input */
+            font-weight: 500;
+            color: #4a5568;
+            /* Slightly lighter text color */
+        }
+
+        .container input {
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #cbd5e0;
+            /* Light border color */
+            background-color: #fff;
+            font-size: 16px;
+            color: #2d3748;
+            /* Dark text color */
+            width: 100%;
+            /* Full width */
+            box-sizing: border-box;
+            /* Include padding and border in element's total width */
+        }
+
+        .container input::placeholder {
+            color: #a0aec0;
+            /* Placeholder text color */
+        }
+
+        .container button {
+            margin-top: 15px;
+            background: #002855;
+            color: white;
+            font-weight: bold;
+            padding: 12px;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+            width: 100%;
+            /* Full width */
+            box-sizing: border-box;
+            /* Include padding and border in element's total width */
+        }
+
+        .container button:hover {
+            background: #FFC72C;
+            color:black;
+        }
+
+        .container span {
+            display: block;
+            margin-top: 16px;
+            text-align: center;
+            color: #4a5568;
+            /* Text color similar to label */
+        }
+
+        .container span a {
+            color: #4299e1;
+            /* Link color */
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .container span a:hover {
+            color: #3182ce;
+            /* Darker link color on hover */
+        }
+
+        /* Media Query for Smaller Screens */
+        @media (max-width: 600px) {
+            .container {
+                width: 90%;
+                /* Ensure the form takes up 90% of the viewport width */
+                margin: 20% auto;
+                /* Maintain margin at the top and bottom */
+            }
+        }
+
+    </style>
 </head>
 <body>
-   <div class = "container">
-        <div class ="forms-container">
-            <div class ="login">
-                <form method ="POST" autocomplete ="off">
+   <div class="container">
+        <div class="forms-container">
+            <div class="login">
+                <form method="POST" autocomplete="off">
                     <h2 class="title">Log In</h2>
                     {% csrf_token %}
 
-                    {{form.as_p}}
+                    {{ form.as_p }}
                     
                     <button type="submit" class="btn solid">Login</button>
                     <br>
-                    <p>Don't have an account? <a href="{% url 'signup' %}">Sign Up</a></p>
-                    {% for message in messages  %}
-                        <p><div class="alert alert-info" role="alert">
-                        {{message}}
-                        </div>
+                    <span>Don't have an account? <a href="{% url 'signup' %}">Sign Up</a></span>
+                    {% for message in messages %}
+                        <p>
+                            <div class="alert alert-info" role="alert">
+                                {{ message }}
+                            </div>
                         </p>
                     {% endfor %}
                 </form>
-                
             </div>
         </div>
     </div>
 </body>
+</html>

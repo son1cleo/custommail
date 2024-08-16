@@ -5,42 +5,125 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">  
     <title>Signup Page</title>
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <!-- Font-awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <!-- Your custom CSS -->
-    <link rel="stylesheet" type="text/css" href="{% static 'css/signup.css' %}">
+    
+    
+    <style>
+        /* signup.css */
+        .container {
+            background-color: #f7fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 32px;
+            margin: 10% auto;
+            max-width: 500px;
+            width: 100%;
+            box-sizing: border-box;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .container .title {
+            text-align: center;
+            margin-bottom: 24px;
+            color: #2d3748;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .container .input-field {
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            border: 1px solid #cbd5e0;
+            border-radius: 4px;
+            padding: 10px;
+            background-color: #fff;
+        }
+
+
+        .container input {
+            border: none;
+            outline: none;
+            width: 100%;
+            font-size: 16px;
+            color: #2d3748;
+        }
+
+        .container button {
+            background: #002855;
+            color: white;
+            font-weight: bold;
+            padding: 12px;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .container button:hover {
+            background: #FFC72C;
+            color:black;
+        }
+
+        .container p {
+            text-align: center;
+            color: #4a5568;
+        }
+
+        .container p a {
+            color: #4299e1;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .container p a:hover {
+            color: #3182ce;
+        }
+
+        /* Media Query for Smaller Screens */
+        @media (max-width: 600px) {
+            .container {
+                width: 90%;
+                margin: 20% auto;
+            }
+        }
+
+    </style>
 </head>
 <body>
-   <div class="container bg-light shadow-md p-5">
+   <div class="container">
         <div class="forms-container">
             <div class="signup">
                 <form method="POST" class="signup-form" autocomplete="off">
                     {% csrf_token %}
                     <h2 class="title">Sign Up</h2>
                     
+                    <div style="margin-bottom:10px; font-size:20px;">Username:</div>
                     <div class="input-field">
-                        <i class="fas fa-user"></i>
                         {{ form.username }}
                     </div>
+
+                    <div style="margin-bottom:10px; font-size:20px;">Email:</div>
                     <div class="input-field">
-                        <i class="fas fa-envelope"></i>
                         {{ form.email }}
                     </div>
+
+                    <div style="margin-bottom:10px; font-size:20px;">Password:</div>
                     <div class="input-field">
-                        <i class="fas fa-lock"></i>
                         {{ form.password1 }}
                     </div>
+
+                    <div style="margin-bottom:10px; font-size:20px;">Confirm Password:</div>
                     <div class="input-field">
-                        <i class="fas fa-lock"></i>
                         {{ form.password2 }}
                     </div>
                     <button type="submit" class="btn solid">Sign Up</button>
                     <br>
                     <p>Already have an account? <a href="{% url 'login' %}">Log In</a></p>
-                    {% for message in messages  %} <!-- Display messages -->
-                        <p>{{message}}</p>
+                    {% for message in messages %} <!-- Display messages -->
+                        <p>{{ message }}</p>
                     {% endfor %}
                 </form>
             </div>
